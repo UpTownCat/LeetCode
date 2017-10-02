@@ -4,52 +4,33 @@
 # @Author: UpTownCat
 # @Date  : 2017/10/1
 
-# Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
 class Solution(object):
-    def addTwoNumbers(self, l1, l2):
+    def lengthOfLongestSubstring(self, s):
         """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
+        :type s: str
+        :rtype: int
         """
-        l3 = None
-        pointer = None
-        up = 0
-        while l1 != None:
-            v1 = l1.val
-            v2 = 0
-            if l2 != None:
-                v2 = l2.val
-            if l3 == None:
-                l3 = ListNode((v1 + v2 + up) % 10)
-                pointer = l3
-            else:
-                pointer.next = ListNode((v1 + v2 + up) % 10)
-                pointer = pointer.next
-            up = int((v1 + v2 + up) / 10)
-            l1 = l1.next
-            if l2 != None:
-                l2 = l2.next
-        if up != 0:
-            if l2 == None:
-                pointer.next = ListNode(up)
-                pointer = pointer.next
-            else:
-                while up != 0 and l2 != None:
-                    val = up + l2.val
-                    pointer.next = ListNode(val % 10)
-                    pointer = pointer.next
-                    up = int(val / 10)
-                    l2 = l2.next
-                if up != 0:
-                    l2 = ListNode(up)
-        if l2 != None:
-            pointer.next = l2
-        if l3 == None:
-            return ListNode(0)
-        return l3
+        mac = 1
+        right = 1
+        left = 0
+        length = len(s)
+        while left < length:
+            while right < length:
+                index = left
+                tag = 0
+                while index < right:
+                    if s[index] == s[right]:
+                        mac = max(mac, right - left)
+                        left = index + 1
+                        tag = 1
+                        break
+                    index = index + 1
+                right = right + 1
+                if tag:
+                    break
+            if right == length:
+                mac = max(mac, right - left)
+                break
+        if len(s) == 0:
+            mac = 0
+        return mac
