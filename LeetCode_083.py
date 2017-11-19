@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @File  : LeetCode_083.py
+# @Author: UpTownCat
+# @Date  : 2017/10/14
 # Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, x):
@@ -24,18 +29,3 @@ class Solution(object):
                 head = head.next
             head = head.next
         return result
-
-if __name__ == '__main__':
-    solution = Solution()
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(4)
-    head.next.next.next.next.next = ListNode(5)
-    head.next.next.next.next.next.next = ListNode(5)
-    result = solution.deleteDuplicates(head)
-    while result:
-        print result.val, '->'
-        result = result.next
-
