@@ -6,57 +6,22 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
-    def levelOrderBottom(self, root):
+    def buildTree(self, inorder, postorder):
         """
-        :type root: TreeNode
-        :rtype: List[List[int]]
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
         """
-        if not root:
-            return []
-        res, q1, q2 = [], [], []
-        q1.append(root)
-        while q1 or q2:
-            r = []
-            if q1:
-                for item in q1:
-                    r.append(item.val)
-                    if item.left:
-                        q2.append(item.left)
-                    if item.right:
-                        q2.append(item.right)
-                q1 = []
-            else:
-                for item in q2:
-                    r.append(item.val)
-                    if item.left:
-                        q1.append(item.left)
-                    if item.right:
-                        q1.append(item.right)
-                q2 = []
-            res.append(r)
-        res.reverse()
-        return res
-
-root = TreeNode(3)
-
-root_left = TreeNode(9)
-
-root_right = TreeNode(20)
-root.left = root_left
-root.right = root_right
-
-root_right_left = TreeNode(15)
-root_right_right = TreeNode(7)
-
-root_left_left = TreeNode(15)
-root_left_right = TreeNode(7)
-
-root_right.left = root_right_left
-root_right.right = root_right_right
-
-# root_left.left = root_right_left
-# root_left.right = root_right_right
-
-solution = Solution()
-
-print solution.levelOrderBottom(root)
+        if not postorder:
+            return None
+        if len(postorder) == 1:
+            return TreeNode(postorder[-1])
+        head = TreeNode(postorder[-1])
+        in_bound = inorder.index(postorder[-1])
+        left_in = inorder[:in_bound]
+        right_in = inorder[in_bound+1:]
+        left_post = postorder[:in_bound]
+        right_post = postorder[in_bound:-1]
+        head.left = self.buildTree(left_in, left_post)
+        head.right = self.buildTree(right_in, right_post)
+        return head
